@@ -10,7 +10,6 @@ $(function () {
         $('.reg-box').hide()
     })
 
-
     // 从 layui 中获取 form 对象
     const form = layui.form
     // 从 layui 中获取 layer 对象
@@ -53,16 +52,6 @@ $(function () {
         })
     }) */
 
-    // 将key=value形式的数据，转成json格式的字符串
-    const formatToJson = (source) => {
-        let target = {}
-        source.split('&').forEach(el => {
-            let kv = el.split('=')
-            target[kv[0]] = kv[1]
-        })
-        return JSON.stringify(target)
-    }
-
     // 给注册表单添加提交事件（会刷新浏览器）
     $('#form_reg').on('submit', function (e) {
         // 阻止默认提交动作
@@ -70,18 +59,34 @@ $(function () {
         // 发送Ajax请求
         $.ajax({
             method: 'POST',
-            url: 'http://big-event-vue-api-t.itheima.net/api/reg',
-            contentType: 'application/json',
+            url: '/api/reg',
             // 可以将对象转成json格式的字符串
             // data: JSON.stringify({
             //     username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val(),
             //     repassword: $('#form_reg [name=repassword]').val()
             // }),
-            data: formatToJson($(this).serialize()),
+            data: $(this).serialize(),
             success(res) {
                 if (res.code !== 0) return layer.msg(res.message)
                 $('#link_login').click()
-                layer.msg('注册成功')
+                layer.msg('注册成功，请登录！')
+            }
+        })
+    })
+
+    $('#form_login').submit(function (e) {
+        // 阻止默认提交动作
+        e.preventDefault()
+        // 发送Ajax请求
+        $.ajax({
+            method: 'POST',
+            url: '/api/login',
+            data: $(this).serialize(),
+            success(res) {
+                console.log(res)
+                if (res.code !== 0) return layer.msg(res.message)
+                localStorage.setItem('token', res.token)
+                location.href = './home.html'
             }
         })
     })
