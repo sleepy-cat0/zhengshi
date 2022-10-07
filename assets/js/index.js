@@ -17,9 +17,11 @@ function getUserInfo() {
 }
 
 function renderAvatar(res) {
-    if (res.user_pic) {
+    // if (res.user_pic) {
+    if (res.data.user_pic) {
         $('.text-avatar').hide()
-        $('.user-box img').css('src', res.user_pic).show()
+        // $('.user-box img').css('src', res.user_pic).show()
+        $('.user-box img').attr('src', res.data.user_pic).show()
     } else {
         $('.layui-nav-img').hide()
         const name = res.data.nickname || res.data.username
