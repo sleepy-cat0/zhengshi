@@ -47,8 +47,8 @@ $(function () {
             $.ajax({
                 method: 'POST',
                 url: '/my/cate/add',
-                // data: form.val('addFormFilter'),
-                data: $(this).serialize(),
+                data: form.val('addFormFilter'),
+                // data: $(this).serialize(),
                 success(res) {
                     if (res.code !== 0) return layer.msg('添加分类失败')
                     layer.msg('添加分类成功')
