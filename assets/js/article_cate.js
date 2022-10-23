@@ -7,10 +7,10 @@ $(function () {
     function loadCateList() {
         $.ajax({
             method: 'GET',
-            url: '/my/cate/list',
+            url: '/my/article/cates',
             success(res) {
                 console.log(res)
-                if (res.code !== 0) return layer.msg()
+                if (res.status !== 0) return layer.msg()
                 const htmlStr = template('tpl-cate', res)
                 // $('tbody').html(htmlStr)
                 $('tbody').empty().append(htmlStr)
@@ -34,11 +34,11 @@ $(function () {
 
         if (isEdit) {
             $.ajax({
-                method: 'PUT',
-                url: '/my/cate/info',
+                method: 'POST',
+                url: '/my/article/updatecate',
                 data: $(this).serialize(),
                 success(res) {
-                    if (res.code !== 0) return layer.msg('修改分类失败')
+                    if (res.status !== 0) return layer.msg('修改分类失败')
                     layer.msg('修改分类成功')
                     loadCateList()
                 }
@@ -50,7 +50,7 @@ $(function () {
                 data: form.val('addFormFilter'),
                 // data: $(this).serialize(),
                 success(res) {
-                    if (res.code !== 0) return layer.msg('添加分类失败')
+                    if (res.status !== 0) return layer.msg('添加分类失败')
                     layer.msg('添加分类成功')
                     loadCateList()
                 }
@@ -72,9 +72,9 @@ $(function () {
         const id = $(this).attr('data-id')
         $.ajax({
             method: 'GET',
-            url: `/my/cate/info?id=${id}`,
+            url: `/my/article/cates/${id}`,
             success(res) {
-                if (res.code !== 0) return layer.msg('获取分类详情失败')
+                if (res.status !== 0) return layer.msg('获取分类详情失败')
                 // layer.msg('获取分类详情成功')
                 form.val('addFormFilter', res.data)
             }
@@ -86,10 +86,11 @@ $(function () {
         const id = $(this).attr('data-id')
         if (result) {
             $.ajax({
-                method: 'DELETE',
-                url: `/my/cate/del?id=${id}`,
+                method: 'GET',
+                // url: `/my/cate/del?id=${id}`,
+                url: `/my/article/deletecate/${id}`,
                 success(res) {
-                    if (res.code !== 0) layer.msg('删除分类详情失败')
+                    if (res.status !== 0) layer.msg('删除分类详情失败')
                     layer.msg('删除分类详情成功')
                     loadCateList()
                 }

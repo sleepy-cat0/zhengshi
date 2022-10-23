@@ -59,7 +59,8 @@ $(function () {
         // 发送Ajax请求
         $.ajax({
             method: 'POST',
-            url: '/api/reg',
+            // url: '/api/reg',
+            url: '/api/reguser',
             // 可以将对象转成json格式的字符串
             // data: JSON.stringify({
             //     username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val(),
@@ -67,7 +68,7 @@ $(function () {
             // }),
             data: $(this).serialize(),
             success(res) {
-                if (res.code !== 0) return layer.msg(res.message)
+                if (res.status !== 0) return layer.msg(res.message)
                 $('#link_login').click()
                 layer.msg('注册成功，请登录！')
             }
@@ -84,7 +85,7 @@ $(function () {
             data: $(this).serialize(),
             success(res) {
                 console.log(res)
-                if (res.code !== 0) return layer.msg(res.message)
+                if (res.status !== 0) return layer.msg(res.message)
                 localStorage.setItem('token', res.token)
                 location.href = './home.html'
             }

@@ -9,7 +9,7 @@ function getUserInfo() {
         method: 'GET',
         url: '/my/userinfo',
         success(res) {
-            if (res.code !== 0) return layer.msg(res.message)
+            if (res.status !== 0) return layer.msg(res.message)
 
             renderAvatar(res)
         }

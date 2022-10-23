@@ -24,12 +24,13 @@ $(function () {
     function loadCateList() {
         $.ajax({
             method: 'GET',
-            url: 'http://big-event-vue-api-t.itheima.net/my/cate/list',
+            // url: 'http://big-event-vue-api-t.itheima.net/my/cate/list',
+            url: 'http://127.0.0.1:9090/my/article/cates',
             headers: {
                 Authorization: localStorage.getItem('token')
             },
             success(res) {
-                if (res.code !== 0) return layer.msg('失败')
+                if (res.status !== 0) return layer.msg('失败')
                 const html = template('tpl-cate', res)
                 // $('tbody').html(htmlStr)
                 $('[name=cate_id]').html(html)
@@ -75,7 +76,8 @@ $(function () {
 
                 $.ajax({
                     method: 'POST',
-                    url: 'http://big-event-vue-api-t.itheima.net/my/article/add',
+                    // url: 'http://big-event-vue-api-t.itheima.net/my/article/add',
+                    url: 'http://127.0.0.1:9090/my/article/add',
                     data: fd,
                     headers: {
                         Authorization: localStorage.getItem('token')
@@ -84,7 +86,7 @@ $(function () {
                     processData: false,
                     contentType: false,
                     success(res) {
-                        if (res.code !== 0) return layer.msg('发布文章失败了')
+                        if (res.status !== 0) return layer.msg('发布文章失败了')
                         layer.msg('发布文章成功了')
                         location.href = '../article/article_list.html'
                     }

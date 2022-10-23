@@ -10,7 +10,8 @@ $.ajaxPrefilter(function (config) {
         return JSON.stringify(target)
     }
 
-    config.url = 'http://big-event-vue-api-t.itheima.net' + config.url
+    // config.url = 'http://big-event-vue-api-t.itheima.net' + config.url
+    config.url = 'http://127.0.0.1:9090' + config.url
 
     config.contentType = 'application/json'
 
@@ -26,7 +27,7 @@ $.ajaxPrefilter(function (config) {
     }
 
     config.error = function (err) {
-        if (err.responseJSON.code === 1 && err.responseJSON.message === '身份认证失败！') {
+        if (err.responseJSON.status === 1 && err.responseJSON.message === '身份认证失败！') {
             localStorage.clear()
             location.href = './login.html'
         }

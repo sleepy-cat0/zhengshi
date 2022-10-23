@@ -13,7 +13,7 @@ $(function () {
         $.ajax({
             url: '/my/userinfo',
             success(res) {
-                if (res.code !== 0) return layer.msg('请求信息失败！')
+                if (res.status !== 0) return layer.msg('请求信息失败！')
                 // console.log(res)
                 form.val('userForm', res.data)
             }
@@ -29,11 +29,11 @@ $(function () {
     $('.layui-form').on('submit', function (e) {
         e.preventDefault()
         $.ajax({
-            method: 'PUT',
+            method: 'POST',
             url: '/my/userinfo',
             data: form.val('userForm'),
             success(res) {
-                if (res.code !== 0) return layer.msg('更新用户信息失败！')
+                if (res.status !== 0) return layer.msg('更新用户信息失败！')
                 window.parent.getUserInfo()
                 layer.msg('更新用户信息成功！')
             }
